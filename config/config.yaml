@@ -1,0 +1,28 @@
+# Intelligent Tutoring System Configuration
+
+system:
+  name: "Intelligent Tutoring System"
+  version: "0.1.0"
+  debug: false
+
+tutoring:
+  default_strategy: "adaptive"
+  assessment_threshold: 0.7
+  max_session_duration: 3600  # seconds
+  
+  # Topics available in the system
+  topics:
+    - mathematics
+    - physics
+    - programming
+    - languages
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/its.log"
+
+database:
+  # Database configuration (to be implemented)
+  type: "sqlite"
+  path: "data/its.db"
