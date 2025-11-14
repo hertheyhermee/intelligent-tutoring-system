@@ -1,0 +1,245 @@
+"""Flask web application for Intelligent Tutoring System."""
+
+from flask import Flask, render_template, request, session, redirect, url_for, jsonify
+from datetime import datetime
+import secrets
+from pathlib import Path
+
+from ..core.student import Student
+from ..domains.geometry import GeometryTutor, GeometryProblem
+
+
+app = Flask(__name__, 
+            template_folder=str(Path(__file__).parent / 'templates'),
+            static_folder=str(Path(__file__).parent / 'static'))
+app.secret_key = secrets.token_hex(16)
+
+# Global storage for demo purposes (in production, use a database)
+students_db = {}
+geometry_tutor = GeometryTutor()
+
+
+@app.route('/')
+def index():
+    """Home page - student login/registration."""
+    return render_template('index.html')
+
+
+@app.route('/register', methods=['POST'])
+def register():
+    """Register a new student."""
+    student_name = request.form.get('name', '').strip()
+    
+    if not student_name:
+        return render_template('index.html', error="Please enter your name")
+    
+    # Create new student
+    student = Student(name=student_name)
+    
+    # Initialize geometry knowledge for all shapes
+    for shape in GeometryTutor.SHAPES:
+        student.knowledge_level[shape] = 0.0
+    
+    students_db[str(student.id)] = student
+    session['student_id'] = str(student.id)
+    
+    return redirect(url_for('dashboard'))
+
+
+@app.route('/dashboard')
+def dashboard():
+    """Student dashboard showing progress and options."""
+    student_id = session.get('student_id')
+    
+    if not student_id or student_id not in students_db:
+        return redirect(url_for('index'))
+    
+    student = students_db[student_id]
+    
+    # Calculate overall progress
+    if student.knowledge_level:
+        avg_knowledge = sum(student.knowledge_level.values()) / len(student.knowledge_level)
+        progress_percentage = int(avg_knowledge * 100)
+    else:
+        progress_percentage = 0
+    
+    # Get recommended shape
+    recommended_shape = geometry_tutor.recommend_next_shape(student.knowledge_level)
+    
+    return render_template('dashboard.html', 
+                         student=student, 
+                         progress_percentage=progress_percentage,
+                         recommended_shape=recommended_shape,
+                         shapes=GeometryTutor.SHAPES)
+
+
+@app.route('/practice/<shape>')
+def practice(shape):
+    """Start practicing a specific shape."""
+    student_id = session.get('student_id')
+    
+    if not student_id or student_id not in students_db:
+        return redirect(url_for('index'))
+    
+    if shape not in GeometryTutor.SHAPES:
+        return redirect(url_for('dashboard'))
+    
+    student = students_db[student_id]
+    
+    # Get student's knowledge level for this shape
+    knowledge_level = student.knowledge_level.get(shape, 0.0)
+    difficulty = geometry_tutor.get_difficulty_for_knowledge_level(knowledge_level)
+    
+    # Generate a new problem
+    problem = geometry_tutor.generate_problem(shape, difficulty)
+    
+    # Store problem in session
+    session['current_problem'] = {
+        'shape': problem.shape,
+        'parameters': problem.parameters,
+        'question': problem.question,
+        'correct_answer': problem.correct_answer,
+        'difficulty': problem.difficulty,
+        'hint': problem.hint,
+        'explanation': problem.explanation
+    }
+    
+    return render_template('practice.html', 
+                         student=student,
+                         problem=problem,
+                         show_hint=False)
+
+
+@app.route('/submit_answer', methods=['POST'])
+def submit_answer():
+    """Submit an answer to the current problem."""
+    student_id = session.get('student_id')
+    
+    if not student_id or student_id not in students_db:
+        return redirect(url_for('index'))
+    
+    student = students_db[student_id]
+    problem_data = session.get('current_problem')
+    
+    if not problem_data:
+        return redirect(url_for('dashboard'))
+    
+    # Recreate problem object
+    problem = GeometryProblem(
+        shape=problem_data['shape'],
+        parameters=problem_data['parameters'],
+        question=problem_data['question'],
+        correct_answer=problem_data['correct_answer'],
+        difficulty=problem_data['difficulty'],
+        hint=problem_data['hint'],
+        explanation=problem_data['explanation']
+    )
+    
+    try:
+        user_answer = float(request.form.get('answer', 0))
+    except ValueError:
+        return render_template('practice.html', 
+                             student=student,
+                             problem=problem,
+                             error="Please enter a valid number",
+                             show_hint=False)
+    
+    # Check answer
+    is_correct, feedback = geometry_tutor.check_answer(problem, user_answer)
+    
+    # Update student knowledge
+    current_knowledge = student.knowledge_level.get(problem.shape, 0.0)
+    
+    if is_correct:
+        # Increase knowledge
+        new_knowledge = min(1.0, current_knowledge + 0.1)
+    else:
+        # Slightly decrease knowledge
+        new_knowledge = max(0.0, current_knowledge - 0.05)
+    
+    student.update_knowledge(problem.shape, new_knowledge)
+    
+    # Add performance record
+    student.add_performance_record({
+        'shape': problem.shape,
+        'difficulty': problem.difficulty,
+        'correct': is_correct,
+        'answer': user_answer,
+        'expected': problem.correct_answer
+    })
+    
+    return render_template('result.html',
+                         student=student,
+                         problem=problem,
+                         user_answer=user_answer,
+                         is_correct=is_correct,
+                         feedback=feedback)
+
+
+@app.route('/hint')
+def hint():
+    """Show hint for current problem."""
+    student_id = session.get('student_id')
+    
+    if not student_id or student_id not in students_db:
+        return redirect(url_for('index'))
+    
+    student = students_db[student_id]
+    problem_data = session.get('current_problem')
+    
+    if not problem_data:
+        return redirect(url_for('dashboard'))
+    
+    problem = GeometryProblem(
+        shape=problem_data['shape'],
+        parameters=problem_data['parameters'],
+        question=problem_data['question'],
+        correct_answer=problem_data['correct_answer'],
+        difficulty=problem_data['difficulty'],
+        hint=problem_data['hint'],
+        explanation=problem_data['explanation']
+    )
+    
+    return render_template('practice.html', 
+                         student=student,
+                         problem=problem,
+                         show_hint=True)
+
+
+@app.route('/progress')
+def progress():
+    """Show detailed progress page."""
+    student_id = session.get('student_id')
+    
+    if not student_id or student_id not in students_db:
+        return redirect(url_for('index'))
+    
+    student = students_db[student_id]
+    
+    # Calculate statistics
+    total_problems = len(student.performance_history)
+    correct_problems = sum(1 for record in student.performance_history if record.get('correct', False))
+    accuracy = int((correct_problems / total_problems * 100)) if total_problems > 0 else 0
+    
+    return render_template('progress.html',
+                         student=student,
+                         total_problems=total_problems,
+                         correct_problems=correct_problems,
+                         accuracy=accuracy,
+                         shapes=GeometryTutor.SHAPES)
+
+
+@app.route('/logout')
+def logout():
+    """Logout current student."""
+    session.clear()
+    return redirect(url_for('index'))
+
+
+def run_server(host='127.0.0.1', port=5000, debug=True):
+    """Run the Flask development server."""
+    app.run(host=host, port=port, debug=debug)
+
+
+if __name__ == '__main__':
+    run_server()
