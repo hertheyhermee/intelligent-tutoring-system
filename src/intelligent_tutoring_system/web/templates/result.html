@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Result - Geometry Tutor{% endblock %}
+
+{% block content %}
+<div class="result-container">
+    <div class="result-card {% if is_correct %}correct{% else %}incorrect{% endif %}">
+        <div class="result-icon">
+            {% if is_correct %}
+            <span class="emoji">✅</span>
+            {% else %}
+            <span class="emoji">❌</span>
+            {% endif %}
+        </div>
+        
+        <h1>{{ feedback }}</h1>
+        
+        <div class="answer-details">
+            <div class="detail-row">
+                <span class="label">Your Answer:</span>
+                <span class="value">{{ user_answer }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Correct Answer:</span>
+                <span class="value">{{ problem.correct_answer }}</span>
+            </div>
+        </div>
+        
+        <div class="explanation-box">
+            <h3>📚 Explanation</h3>
+            <p>{{ problem.explanation }}</p>
+        </div>
+        
+        <div class="knowledge-update">
+            <p>Your {{ problem.shape }} knowledge: 
+                <strong>{{ (student.knowledge_level.get(problem.shape, 0) * 100)|int }}%</strong>
+            </p>
+            <div class="knowledge-bar">
+                <div class="knowledge-fill" style="width: {{ (student.knowledge_level.get(problem.shape, 0) * 100)|int }}%"></div>
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <a href="{{ url_for('practice', shape=problem.shape) }}" class="btn btn-primary">
+                Practice {{ problem.shape.title() }} Again
+            </a>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

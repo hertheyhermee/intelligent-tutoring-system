@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Progress - Geometry Tutor{% endblock %}
+
+{% block content %}
+<div class="progress-page">
+    <h1>{{ student.name }}'s Progress Report 📊</h1>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">{{ total_problems }}</div>
+            <div class="stat-label">Total Problems Solved</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ correct_problems }}</div>
+            <div class="stat-label">Correct Answers</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ accuracy }}%</div>
+            <div class="stat-label">Accuracy</div>
+        </div>
+    </div>
+    
+    <div class="knowledge-breakdown">
+        <h2>Knowledge by Shape</h2>
+        <div class="knowledge-grid">
+            {% for shape in shapes %}
+            <div class="knowledge-item">
+                <div class="shape-header">
+                    <span class="shape-name">{{ shape.title() }}</span>
+                    <span class="shape-percentage">{{ (student.knowledge_level.get(shape, 0) * 100)|int }}%</span>
+                </div>
+                <div class="knowledge-bar">
+                    <div class="knowledge-fill" style="width: {{ (student.knowledge_level.get(shape, 0) * 100)|int }}%"></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    {% if student.performance_history %}
+    <div class="recent-activity">
+        <h2>Recent Activity</h2>
+        <div class="activity-list">
+            {% for record in student.performance_history[-10:]|reverse %}
+            <div class="activity-item {% if record.correct %}correct{% else %}incorrect{% endif %}">
+                <span class="activity-icon">{% if record.correct %}✅{% else %}❌{% endif %}</span>
+                <span class="activity-shape">{{ record.shape.title() }}</span>
+                <span class="activity-difficulty">{{ record.difficulty }}</span>
+                <span class="activity-time">{{ record.timestamp.strftime('%H:%M:%S') }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="button-group">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Geometry Tutor{% endblock %}
+
+{% block content %}
+<div class="welcome-container">
+    <div class="welcome-card">
+        <h1>Welcome to Geometry Tutor! 📐</h1>
+        <p class="subtitle">Master the art of calculating areas of different shapes</p>
+        
+        <div class="features">
+            <div class="feature">
+                <span class="emoji">🔷</span>
+                <h3>Learn Shapes</h3>
+                <p>Master squares, rectangles, triangles, and circles</p>
+            </div>
+            <div class="feature">
+                <span class="emoji">📊</span>
+                <h3>Track Progress</h3>
+                <p>See your improvement over time</p>
+            </div>
+            <div class="feature">
+                <span class="emoji">🎯</span>
+                <h3>Adaptive Learning</h3>
+                <p>Problems adjust to your skill level</p>
+            </div>
+        </div>
+        
+        <div class="login-form">
+            <h2>Get Started</h2>
+            {% if error %}
+            <div class="error-message">{{ error }}</div>
+            {% endif %}
+            <form method="POST" action="{{ url_for('register') }}">
+                <input type="text" name="name" placeholder="Enter your name" required autofocus>
+                <button type="submit" class="btn btn-primary">Start Learning</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

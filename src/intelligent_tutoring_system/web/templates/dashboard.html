@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Geometry Tutor{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="welcome-header">
+        <h1>Welcome back, {{ student.name }}! 👋</h1>
+        <p>Let's continue your geometry journey</p>
+    </div>
+    
+    <div class="progress-overview">
+        <h2>Your Overall Progress</h2>
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: {{ progress_percentage }}%">
+                {{ progress_percentage }}%
+            </div>
+        </div>
+    </div>
+    
+    <div class="recommendation-card">
+        <h3>🎯 Recommended Next Topic</h3>
+        <p>Based on your progress, we recommend practicing: <strong>{{ recommended_shape.title() }}</strong></p>
+        <a href="{{ url_for('practice', shape=recommended_shape) }}" class="btn btn-primary">Practice {{ recommended_shape.title() }}</a>
+    </div>
+    
+    <div class="shapes-grid">
+        <h2>Choose a Shape to Practice</h2>
+        <div class="shapes-container">
+            {% for shape in shapes %}
+            <div class="shape-card">
+                <div class="shape-icon">
+                    {% if shape == 'square' %}⬛
+                    {% elif shape == 'rectangle' %}▭
+                    {% elif shape == 'triangle' %}🔺
+                    {% elif shape == 'circle' %}⭕
+                    {% endif %}
+                </div>
+                <h3>{{ shape.title() }}</h3>
+                <div class="knowledge-level">
+                    <div class="knowledge-bar">
+                        <div class="knowledge-fill" style="width: {{ (student.knowledge_level.get(shape, 0) * 100)|int }}%"></div>
+                    </div>
+                    <span>{{ (student.knowledge_level.get(shape, 0) * 100)|int }}% mastered</span>
+                </div>
+                <a href="{{ url_for('practice', shape=shape) }}" class="btn btn-secondary">Practice</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
