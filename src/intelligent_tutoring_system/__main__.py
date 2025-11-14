@@ -21,8 +21,8 @@ def parse_args():
     parser.add_argument(
         "--mode",
         choices=["interactive", "batch", "server"],
-        default="interactive",
-        help="Operation mode",
+        default="server",
+        help="Operation mode (default: server for web interface)",
     )
     parser.add_argument(
         "--debug",
