@@ -144,3 +144,4 @@ logs/
 data/
 *.db
 config/local_config.yaml
+WARP.md
