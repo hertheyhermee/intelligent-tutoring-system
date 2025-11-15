@@ -47,16 +47,21 @@ pip install -e .
 
 ## Usage
 
-### Running the System
+### Running the Web Interface (Recommended)
 
-Run in interactive mode (default):
+The easiest way to use the Geometry Tutor is through the web interface:
+
 ```bash
-python -m intelligent_tutoring_system
+python run_web.py
 ```
 
-Or use the installed command:
+Then open your browser to **http://127.0.0.1:5000**
+
+Alternatively:
 ```bash
-its
+python -m intelligent_tutoring_system --mode server
+# or
+its --mode server
 ```
 
 ### Command Line Options
