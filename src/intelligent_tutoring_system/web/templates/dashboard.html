@@ -43,10 +43,44 @@
                     </div>
                     <span>{{ (student.knowledge_level.get(shape, 0) * 100)|int }}% mastered</span>
                 </div>
-                <a href="{{ url_for('practice', shape=shape) }}" class="btn btn-secondary">Practice</a>
+                <div class="mode-selector">
+                    <span class="mode-label">Choose Mode:</span>
+                    <div class="mode-buttons">
+                        <a href="{{ url_for('practice', shape=shape, mode='calculate') }}" class="btn btn-mode" title="Calculate area from given dimensions">
+                            📝 Calculate
+                        </a>
+                        <a href="{{ url_for('practice', shape=shape, mode='multiple_choice') }}" class="btn btn-mode" title="Choose the correct answer">
+                            ✓ Multiple Choice
+                        </a>
+                        <a href="{{ url_for('practice', shape=shape, mode='custom_input') }}" class="btn btn-mode" title="Enter your own dimensions">
+                            ✏️ Custom Input
+                        </a>
+                    </div>
+                </div>
             </div>
             {% endfor %}
         </div>
     </div>
+    
+    {% if ontology_stats and ontology_stats.loaded %}
+    <div class="ontology-info">
+        <h2>🧠 Knowledge Base (Ontology)</h2>
+        <div class="ontology-stats">
+            <div class="stat-card">
+                <span class="stat-label">Classes</span>
+                <span class="stat-value">{{ ontology_stats.classes }}</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Individuals</span>
+                <span class="stat-value">{{ ontology_stats.individuals }}</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Properties</span>
+                <span class="stat-value">{{ ontology_stats.object_properties + ontology_stats.data_properties }}</span>
+            </div>
+        </div>
+        <p class="ontology-description">This tutoring system uses an OWL ontology to structure geometric knowledge and validate learning content.</p>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

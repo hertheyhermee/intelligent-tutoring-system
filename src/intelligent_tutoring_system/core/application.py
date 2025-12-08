@@ -54,5 +54,13 @@ class Application:
     
     def _run_server(self):
         """Run in server mode."""
-        self.logger.info("Server mode not yet implemented")
-        print("Server mode coming soon...")
+        self.logger.info("Starting web server mode")
+        try:
+            from ..web.app import run_server
+            print("🚀 Starting Geometry Tutor Web Server...")
+            print("📖 Open your browser and go to: http://127.0.0.1:5000")
+            print("Press Ctrl+C to stop the server\n")
+            run_server(debug=self.debug)
+        except ImportError:
+            self.logger.error("Flask not installed. Install with: pip install flask")
+            print("Error: Flask is required for web mode. Install with: pip install flask")

@@ -7,6 +7,7 @@ from pathlib import Path
 
 from ..core.student import Student
 from ..domains.geometry import GeometryTutor, GeometryProblem
+from ..utils.ontology_manager import get_ontology_manager
 
 
 app = Flask(__name__, 
@@ -17,6 +18,7 @@ app.secret_key = secrets.token_hex(16)
 # Global storage for demo purposes (in production, use a database)
 students_db = {}
 geometry_tutor = GeometryTutor()
+ontology_manager = get_ontology_manager()
 
 
 @app.route('/')
@@ -66,16 +68,27 @@ def dashboard():
     # Get recommended shape
     recommended_shape = geometry_tutor.recommend_next_shape(student.knowledge_level)
     
+    # Get ontology stats
+    ontology_stats = ontology_manager.get_ontology_stats()
+    
     return render_template('dashboard.html', 
                          student=student, 
                          progress_percentage=progress_percentage,
                          recommended_shape=recommended_shape,
-                         shapes=GeometryTutor.SHAPES)
+                         shapes=GeometryTutor.SHAPES,
+                         ontology_stats=ontology_stats)
 
 
 @app.route('/practice/<shape>')
-def practice(shape):
-    """Start practicing a specific shape."""
+@app.route('/practice/<shape>/<mode>')
+def practice(shape, mode='calculate'):
+    """Start practicing a specific shape with chosen mode.
+    
+    Modes:
+    - calculate: Standard problem (given dimensions, calculate area)
+    - multiple_choice: Choose correct answer from options
+    - custom_input: Enter your own dimensions
+    """
     student_id = session.get('student_id')
     
     if not student_id or student_id not in students_db:
@@ -90,10 +103,10 @@ def practice(shape):
     knowledge_level = student.knowledge_level.get(shape, 0.0)
     difficulty = geometry_tutor.get_difficulty_for_knowledge_level(knowledge_level)
     
-    # Generate a new problem
-    problem = geometry_tutor.generate_problem(shape, difficulty)
+    # Generate problem with specified mode
+    problem = geometry_tutor.generate_problem_with_mode(shape, difficulty, mode)
     
-    # Store problem in session
+    # Store problem in session with enhanced data
     session['current_problem'] = {
         'shape': problem.shape,
         'parameters': problem.parameters,
@@ -101,13 +114,95 @@ def practice(shape):
         'correct_answer': problem.correct_answer,
         'difficulty': problem.difficulty,
         'hint': problem.hint,
-        'explanation': problem.explanation
+        'explanation': problem.explanation,
+        'problem_type': problem.problem_type,
+        'choices': problem.choices,
+        'step_by_step': problem.step_by_step,
+        'learning_tips': problem.learning_tips,
+        'formula_breakdown': problem.formula_breakdown
     }
     
     return render_template('practice.html', 
                          student=student,
                          problem=problem,
-                         show_hint=False)
+                         show_hint=False,
+                         mode=mode)
+
+
+@app.route('/calculate_custom', methods=['POST'])
+def calculate_custom():
+    """Calculate area from user-provided dimensions."""
+    student_id = session.get('student_id')
+    
+    if not student_id or student_id not in students_db:
+        return redirect(url_for('index'))
+    
+    student = students_db[student_id]
+    problem_data = session.get('current_problem')
+    
+    if not problem_data:
+        return redirect(url_for('dashboard'))
+    
+    shape = problem_data['shape']
+    
+    # Extract user-provided dimensions
+    user_params = {}
+    try:
+        if shape == 'square':
+            user_params['side'] = float(request.form.get('side', 0))
+        elif shape == 'rectangle':
+            user_params['length'] = float(request.form.get('length', 0))
+            user_params['width'] = float(request.form.get('width', 0))
+        elif shape == 'triangle':
+            user_params['base'] = float(request.form.get('base', 0))
+            user_params['height'] = float(request.form.get('height', 0))
+        elif shape == 'circle':
+            user_params['radius'] = float(request.form.get('radius', 0))
+    except ValueError:
+        error_msg = "Please enter valid numbers for all dimensions"
+        problem = geometry_tutor.generate_problem_with_mode(shape, 'beginner', 'custom_input')
+        return render_template('practice.html', student=student, problem=problem, error=error_msg, mode='custom_input')
+    
+    # Calculate area and get full solution
+    area, problem = geometry_tutor.calculate_custom_area(shape, user_params)
+    
+    # Update session
+    session['current_problem'] = {
+        'shape': problem.shape,
+        'parameters': problem.parameters,
+        'question': problem.question,
+        'correct_answer': problem.correct_answer,
+        'difficulty': problem.difficulty,
+        'hint': problem.hint,
+        'explanation': problem.explanation,
+        'problem_type': problem.problem_type,
+        'step_by_step': problem.step_by_step,
+        'learning_tips': problem.learning_tips,
+        'formula_breakdown': problem.formula_breakdown
+    }
+    
+    # Record this as a practice attempt
+    student.add_performance_record({
+        'shape': shape,
+        'difficulty': 'custom',
+        'correct': True,  # Custom input is always "correct" - it's a learning tool
+        'answer': area,
+        'expected': area,
+        'mode': 'custom_input'
+    })
+    
+    # Update knowledge slightly
+    current_knowledge = student.knowledge_level.get(shape, 0.0)
+    new_knowledge = min(1.0, current_knowledge + 0.05)
+    student.update_knowledge(shape, new_knowledge)
+    
+    return render_template('result.html',
+                         student=student,
+                         problem=problem,
+                         user_answer=area,
+                         is_correct=True,
+                         feedback="Great! Here's your calculated area with detailed explanation.",
+                         show_detailed_solution=True)
 
 
 @app.route('/submit_answer', methods=['POST'])
@@ -124,7 +219,45 @@ def submit_answer():
     if not problem_data:
         return redirect(url_for('dashboard'))
     
-    # Recreate problem object
+    problem_type = problem_data.get('problem_type', 'calculate')
+    
+    # Handle multiple choice differently
+    if problem_type == 'multiple_choice':
+        try:
+            user_answer = float(request.form.get('answer', 0))
+        except ValueError:
+            error_msg = "Please select an answer"
+            problem = GeometryProblem(
+                shape=problem_data['shape'],
+                parameters=problem_data['parameters'],
+                question=problem_data['question'],
+                correct_answer=problem_data['correct_answer'],
+                difficulty=problem_data['difficulty'],
+                hint=problem_data['hint'],
+                explanation=problem_data['explanation'],
+                problem_type=problem_type,
+                choices=problem_data['choices']
+            )
+            return render_template('practice.html', student=student, problem=problem, error=error_msg, mode='multiple_choice')
+    else:
+        # Standard calculate mode
+        try:
+            user_answer = float(request.form.get('answer', 0))
+        except ValueError:
+            error_msg = "Please enter a valid number"
+            problem = GeometryProblem(
+                shape=problem_data['shape'],
+                parameters=problem_data['parameters'],
+                question=problem_data['question'],
+                correct_answer=problem_data['correct_answer'],
+                difficulty=problem_data['difficulty'],
+                hint=problem_data['hint'],
+                explanation=problem_data['explanation'],
+                problem_type=problem_type
+            )
+            return render_template('practice.html', student=student, problem=problem, error=error_msg, mode='calculate')
+    
+    # Recreate full problem object with all data
     problem = GeometryProblem(
         shape=problem_data['shape'],
         parameters=problem_data['parameters'],
@@ -132,17 +265,13 @@ def submit_answer():
         correct_answer=problem_data['correct_answer'],
         difficulty=problem_data['difficulty'],
         hint=problem_data['hint'],
-        explanation=problem_data['explanation']
+        explanation=problem_data['explanation'],
+        problem_type=problem_type,
+        choices=problem_data.get('choices'),
+        step_by_step=problem_data.get('step_by_step'),
+        learning_tips=problem_data.get('learning_tips'),
+        formula_breakdown=problem_data.get('formula_breakdown')
     )
-    
-    try:
-        user_answer = float(request.form.get('answer', 0))
-    except ValueError:
-        return render_template('practice.html', 
-                             student=student,
-                             problem=problem,
-                             error="Please enter a valid number",
-                             show_hint=False)
     
     # Check answer
     is_correct, feedback = geometry_tutor.check_answer(problem, user_answer)

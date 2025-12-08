@@ -1,0 +1,384 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/geometry-tutor/ontology#"
+     xml:base="http://www.semanticweb.org/geometry-tutor/ontology"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    
+    <owl:Ontology rdf:about="http://www.semanticweb.org/geometry-tutor/ontology">
+        <rdfs:comment>Ontology for Intelligent Geometry Tutoring System - Area Calculations</rdfs:comment>
+        <rdfs:label>Geometry Tutor Ontology</rdfs:label>
+    </owl:Ontology>
+    
+    
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#Shape -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#Shape">
+        <rdfs:comment>Abstract class representing geometric shapes</rdfs:comment>
+        <rdfs:label>Shape</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#TwoDimensionalShape -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#TwoDimensionalShape">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Shape"/>
+        <rdfs:comment>Shapes that exist in two dimensions</rdfs:comment>
+        <rdfs:label>Two-Dimensional Shape</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#Square -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#Square">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#TwoDimensionalShape"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Quadrilateral"/>
+        <rdfs:comment>A quadrilateral with four equal sides and four right angles</rdfs:comment>
+        <rdfs:label>Square</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#Rectangle -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#Rectangle">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#TwoDimensionalShape"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Quadrilateral"/>
+        <rdfs:comment>A quadrilateral with four right angles</rdfs:comment>
+        <rdfs:label>Rectangle</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#Triangle -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#Triangle">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#TwoDimensionalShape"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Polygon"/>
+        <rdfs:comment>A polygon with three sides and three angles</rdfs:comment>
+        <rdfs:label>Triangle</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#Circle -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#Circle">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#TwoDimensionalShape"/>
+        <rdfs:comment>A round shape with all points equidistant from center</rdfs:comment>
+        <rdfs:label>Circle</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#Polygon -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#Polygon">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#TwoDimensionalShape"/>
+        <rdfs:comment>A closed shape with straight sides</rdfs:comment>
+        <rdfs:label>Polygon</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#Quadrilateral -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#Quadrilateral">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Polygon"/>
+        <rdfs:comment>A polygon with four sides</rdfs:comment>
+        <rdfs:label>Quadrilateral</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#Formula -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#Formula">
+        <rdfs:comment>Mathematical formula for calculating properties</rdfs:comment>
+        <rdfs:label>Formula</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#AreaFormula -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#AreaFormula">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Formula"/>
+        <rdfs:comment>Formula for calculating area of a shape</rdfs:comment>
+        <rdfs:label>Area Formula</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#DifficultyLevel -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#DifficultyLevel">
+        <rdfs:comment>Level of difficulty for problems</rdfs:comment>
+        <rdfs:label>Difficulty Level</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#Beginner -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#Beginner">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#DifficultyLevel"/>
+        <rdfs:comment>Beginner level problems with simple values</rdfs:comment>
+        <rdfs:label>Beginner</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#Intermediate -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#Intermediate">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#DifficultyLevel"/>
+        <rdfs:comment>Intermediate level problems with moderate complexity</rdfs:comment>
+        <rdfs:label>Intermediate</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#Advanced -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#Advanced">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#DifficultyLevel"/>
+        <rdfs:comment>Advanced level problems with complex values</rdfs:comment>
+        <rdfs:label>Advanced</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#Student -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#Student">
+        <rdfs:comment>Learner using the tutoring system</rdfs:comment>
+        <rdfs:label>Student</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#Problem -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#Problem">
+        <rdfs:comment>A problem to be solved by student</rdfs:comment>
+        <rdfs:label>Problem</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#AreaProblem -->
+    <owl:Class rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#AreaProblem">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Problem"/>
+        <rdfs:comment>Problem related to calculating area</rdfs:comment>
+        <rdfs:label>Area Problem</rdfs:label>
+    </owl:Class>
+    
+    
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#hasFormula -->
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#hasFormula">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Shape"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#AreaFormula"/>
+        <rdfs:comment>Relates a shape to its area formula</rdfs:comment>
+        <rdfs:label>has formula</rdfs:label>
+    </owl:ObjectProperty>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#hasDifficulty -->
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#hasDifficulty">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Problem"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#DifficultyLevel"/>
+        <rdfs:comment>Relates a problem to its difficulty level</rdfs:comment>
+        <rdfs:label>has difficulty</rdfs:label>
+    </owl:ObjectProperty>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#aboutShape -->
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#aboutShape">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Problem"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Shape"/>
+        <rdfs:comment>Relates a problem to the shape it concerns</rdfs:comment>
+        <rdfs:label>about shape</rdfs:label>
+    </owl:ObjectProperty>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#solves -->
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#solves">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Student"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Problem"/>
+        <rdfs:comment>Relates a student to problems they solve</rdfs:comment>
+        <rdfs:label>solves</rdfs:label>
+    </owl:ObjectProperty>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#hasKnowledgeOf -->
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#hasKnowledgeOf">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Student"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Shape"/>
+        <rdfs:comment>Relates a student to shapes they have knowledge of</rdfs:comment>
+        <rdfs:label>has knowledge of</rdfs:label>
+    </owl:ObjectProperty>
+    
+    
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#formulaExpression -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#formulaExpression">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#AreaFormula"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Mathematical expression of the formula</rdfs:comment>
+        <rdfs:label>formula expression</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#formulaDescription -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#formulaDescription">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#AreaFormula"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Natural language description of the formula</rdfs:comment>
+        <rdfs:label>formula description</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#numberOfSides -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#numberOfSides">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Polygon"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:comment>Number of sides in a polygon</rdfs:comment>
+        <rdfs:label>number of sides</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#knowledgeLevel -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#knowledgeLevel">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Student"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>Student knowledge level between 0.0 and 1.0</rdfs:comment>
+        <rdfs:label>knowledge level</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#studentName -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#studentName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Student"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Name of the student</rdfs:comment>
+        <rdfs:label>student name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#problemText -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#problemText">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Problem"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Text description of the problem</rdfs:comment>
+        <rdfs:label>problem text</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#correctAnswer -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#correctAnswer">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Problem"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>Correct answer to the problem</rdfs:comment>
+        <rdfs:label>correct answer</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    
+    <!-- http://www.semanticweb.org/geometry-tutor/ontology#hintText -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#hintText">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Problem"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Hint for solving the problem</rdfs:comment>
+        <rdfs:label>hint text</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals (Instances)
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+    
+    
+    <!-- Shape Instances -->
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#SquareShape">
+        <rdf:type rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Square"/>
+        <hasFormula rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#SquareAreaFormula"/>
+        <rdfs:label>Square</rdfs:label>
+    </owl:NamedIndividual>
+    
+    
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#RectangleShape">
+        <rdf:type rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Rectangle"/>
+        <hasFormula rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#RectangleAreaFormula"/>
+        <rdfs:label>Rectangle</rdfs:label>
+    </owl:NamedIndividual>
+    
+    
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#TriangleShape">
+        <rdf:type rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Triangle"/>
+        <hasFormula rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#TriangleAreaFormula"/>
+        <numberOfSides rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</numberOfSides>
+        <rdfs:label>Triangle</rdfs:label>
+    </owl:NamedIndividual>
+    
+    
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#CircleShape">
+        <rdf:type rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Circle"/>
+        <hasFormula rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#CircleAreaFormula"/>
+        <rdfs:label>Circle</rdfs:label>
+    </owl:NamedIndividual>
+    
+    
+    <!-- Formula Instances -->
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#SquareAreaFormula">
+        <rdf:type rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#AreaFormula"/>
+        <formulaExpression rdf:datatype="http://www.w3.org/2001/XMLSchema#string">side * side</formulaExpression>
+        <formulaDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Area of a square equals side length multiplied by itself</formulaDescription>
+        <rdfs:label>Square Area Formula</rdfs:label>
+    </owl:NamedIndividual>
+    
+    
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#RectangleAreaFormula">
+        <rdf:type rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#AreaFormula"/>
+        <formulaExpression rdf:datatype="http://www.w3.org/2001/XMLSchema#string">length * width</formulaExpression>
+        <formulaDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Area of a rectangle equals length multiplied by width</formulaDescription>
+        <rdfs:label>Rectangle Area Formula</rdfs:label>
+    </owl:NamedIndividual>
+    
+    
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#TriangleAreaFormula">
+        <rdf:type rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#AreaFormula"/>
+        <formulaExpression rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.5 * base * height</formulaExpression>
+        <formulaDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Area of a triangle equals half the product of base and height</formulaDescription>
+        <rdfs:label>Triangle Area Formula</rdfs:label>
+    </owl:NamedIndividual>
+    
+    
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#CircleAreaFormula">
+        <rdf:type rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#AreaFormula"/>
+        <formulaExpression rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pi * radius * radius</formulaExpression>
+        <formulaDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Area of a circle equals pi multiplied by radius squared</formulaDescription>
+        <rdfs:label>Circle Area Formula</rdfs:label>
+    </owl:NamedIndividual>
+    
+    
+    <!-- Difficulty Level Instances -->
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#BeginnerLevel">
+        <rdf:type rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Beginner"/>
+        <rdfs:label>Beginner Level</rdfs:label>
+    </owl:NamedIndividual>
+    
+    
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#IntermediateLevel">
+        <rdf:type rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Intermediate"/>
+        <rdfs:label>Intermediate Level</rdfs:label>
+    </owl:NamedIndividual>
+    
+    
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/geometry-tutor/ontology#AdvancedLevel">
+        <rdf:type rdf:resource="http://www.semanticweb.org/geometry-tutor/ontology#Advanced"/>
+        <rdfs:label>Advanced Level</rdfs:label>
+    </owl:NamedIndividual>
+    
+</rdf:RDF>

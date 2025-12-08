@@ -31,6 +31,41 @@
             <p>{{ problem.explanation }}</p>
         </div>
         
+        {# Show step-by-step solution if available #}
+        {% if problem.step_by_step %}
+        <div class="step-by-step-solution">
+            <h3>📝 Step-by-Step Solution</h3>
+            <ol class="steps-list">
+                {% for step in problem.step_by_step %}
+                <li>{{ step }}</li>
+                {% endfor %}
+            </ol>
+        </div>
+        {% endif %}
+        
+        {# Show formula breakdown if available #}
+        {% if problem.formula_breakdown %}
+        <div class="formula-details">
+            <h3>📐 Understanding the Formula</h3>
+            <div class="breakdown-content">
+                <p><strong>Formula:</strong> {{ problem.formula_breakdown.formula }}</p>
+                <p><strong>Why it works:</strong> {{ problem.formula_breakdown.why }}</p>
+            </div>
+        </div>
+        {% endif %}
+        
+        {# Show learning tips if available #}
+        {% if problem.learning_tips %}
+        <div class="learning-tips-result">
+            <h3>💡 Remember These Tips</h3>
+            <ul class="tips-list">
+                {% for tip in problem.learning_tips[:2] %}
+                <li>{{ tip }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        
         <div class="knowledge-update">
             <p>Your {{ problem.shape }} knowledge: 
                 <strong>{{ (student.knowledge_level.get(problem.shape, 0) * 100)|int }}%</strong>
