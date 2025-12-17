@@ -9,7 +9,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
     color: #333;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2, #786cb4 100%);
+    background: linear-gradient(135deg, #f59e0b 0%, #ea580c, #dc2626 100%);
     min-height: 100vh;
 }
 
@@ -36,7 +36,7 @@ body {
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #667eea;
+    color: #ea580c;
 }
 
 .nav-links {
@@ -52,7 +52,7 @@ body {
 }
 
 .nav-links a:hover {
-    color: #667eea;
+    color: #ea580c;
 }
 
 /* Main Content */
@@ -80,7 +80,7 @@ main {
 
 .welcome-card h1 {
     font-size: 2.5rem;
-    color: #667eea;
+    color: #ea580c;
     margin-bottom: 0.5rem;
 }
 
@@ -108,7 +108,7 @@ main {
 }
 
 .feature h3 {
-    color: #667eea;
+    color: #ea580c;
     margin-bottom: 0.5rem;
 }
 
@@ -134,7 +134,7 @@ main {
 
 .login-form input:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #ea580c;
 }
 
 /* Buttons */
@@ -151,13 +151,13 @@ main {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
     color: white;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4);
 }
 
 .btn-secondary {
@@ -171,12 +171,12 @@ main {
 
 .btn-outline {
     background: transparent;
-    border: 2px solid #667eea;
-    color: #667eea;
+    border: 2px solid #ea580c;
+    color: #ea580c;
 }
 
 .btn-outline:hover {
-    background: #667eea;
+    background: #ea580c;
     color: white;
 }
 
@@ -202,7 +202,7 @@ main {
 }
 
 .welcome-header h1 {
-    color: #667eea;
+    color: #ea580c;
     margin-bottom: 0.5rem;
 }
 
@@ -220,7 +220,7 @@ main {
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(90deg, #f59e0b 0%, #ea580c 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -230,7 +230,7 @@ main {
 }
 
 .recommendation-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
     color: white;
     padding: 2rem;
     border-radius: 15px;
@@ -244,7 +244,7 @@ main {
 
 .recommendation-card .btn-primary {
     background: white;
-    color: #667eea;
+    color: #ea580c;
     margin-top: 1rem;
 }
 
@@ -291,7 +291,7 @@ main {
 
 .knowledge-fill {
     height: 100%;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(90deg, #f59e0b 0%, #ea580c 100%);
     transition: width 0.5s ease;
 }
 
@@ -376,7 +376,7 @@ main {
 
 .answer-form input:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #ea580c;
 }
 
 .unit {
@@ -483,7 +483,7 @@ main {
 
 .progress-page h1 {
     text-align: center;
-    color: #667eea;
+    color: #ea580c;
     margin-bottom: 2rem;
 }
 
@@ -495,7 +495,7 @@ main {
 }
 
 .stat-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
     color: white;
     padding: 2rem;
     border-radius: 15px;
@@ -538,7 +538,7 @@ main {
 
 .ontology-info h2 {
     text-align: center;
-    color: #667eea;
+    color: #ea580c;
     margin-bottom: 2rem;
 }
 
@@ -550,12 +550,12 @@ main {
 }
 
 .ontology-stats .stat-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
     color: white;
     padding: 1.5rem;
     border-radius: 15px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -591,7 +591,7 @@ main {
 }
 
 .shape-percentage {
-    color: #667eea;
+    color: #ea580c;
     font-weight: bold;
 }
 
@@ -717,7 +717,7 @@ footer {
 }
 
 .btn-mode:hover {
-    background: #667eea;
+    background: #ea580c;
     color: white;
     transform: translateY(-2px);
 }
@@ -768,8 +768,8 @@ footer {
 }
 
 .choice-option:hover {
-    background: #f0f0ff;
-    border-color: #667eea;
+    background: #fff7ed;
+    border-color: #ea580c;
 }
 
 .choice-option input[type="radio"] {
@@ -791,7 +791,7 @@ footer {
 
 .custom-input-form .instruction {
     font-size: 1.1rem;
-    color: #667eea;
+    color: #ea580c;
     margin-bottom: 1.5rem;
     text-align: center;
     font-weight: 500;
@@ -819,14 +819,14 @@ footer {
 
 .custom-input-form input[type="number"]:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #ea580c;
 }
 
 /* Formula Details & Learning Tips */
 .formula-details,
 .learning-tips {
     background: #f9f9f9;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid #ea580c;
     padding: 1.5rem;
     border-radius: 10px;
     margin: 2rem 0;
@@ -835,7 +835,7 @@ footer {
 .formula-details h3,
 .learning-tips h3 {
     margin-bottom: 1rem;
-    color: #667eea;
+    color: #ea580c;
 }
 
 .breakdown-content p {

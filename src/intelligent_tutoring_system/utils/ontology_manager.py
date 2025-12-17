@@ -31,7 +31,7 @@ class OntologyManager:
         if ontology_path is None:
             # Default path relative to project root
             project_root = Path(__file__).parent.parent.parent.parent
-            ontology_path = project_root / "ontology" / "geometry_tutor_ontology.owl"
+            ontology_path = project_root / "ontology" / "its-ontology.owl"
         
         self.ontology_path = Path(ontology_path)
         

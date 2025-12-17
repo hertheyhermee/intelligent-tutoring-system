@@ -1,0 +1,609 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/its/intelligent-tutoring-system#"
+     xml:base="http://www.semanticweb.org/its/intelligent-tutoring-system"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system">
+        <rdfs:comment>Ontology for Intelligent Tutoring System - models students, tutors, sessions, and geometry domain</rdfs:comment>
+        <rdfs:label>ITS Ontology</rdfs:label>
+        <owl:versionInfo>1.0.0</owl:versionInfo>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+    <!-- Agent Classes -->
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Agent">
+        <rdfs:comment>An entity that can perform actions in the tutoring system</rdfs:comment>
+        <rdfs:label>Agent</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Student">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Agent"/>
+        <rdfs:comment>A learner in the tutoring system with tracked progress and knowledge levels</rdfs:comment>
+        <rdfs:label>Student</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Tutor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Agent"/>
+        <rdfs:comment>An intelligent tutor that provides instruction and feedback</rdfs:comment>
+        <rdfs:label>Tutor</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#GeometryTutor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Tutor"/>
+        <rdfs:comment>Specialized tutor for teaching geometry concepts and area calculations</rdfs:comment>
+        <rdfs:label>Geometry Tutor</rdfs:label>
+    </owl:Class>
+
+
+    <!-- Session Classes -->
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Session">
+        <rdfs:comment>A learning session or activity</rdfs:comment>
+        <rdfs:label>Session</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#TutoringSession">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Session"/>
+        <rdfs:comment>A tutoring session between a student and tutor on a specific topic</rdfs:comment>
+        <rdfs:label>Tutoring Session</rdfs:label>
+    </owl:Class>
+
+
+    <!-- Content Classes -->
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Content">
+        <rdfs:comment>Educational content or learning material</rdfs:comment>
+        <rdfs:label>Content</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Problem">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Content"/>
+        <rdfs:comment>A problem or exercise for students to solve</rdfs:comment>
+        <rdfs:label>Problem</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#GeometryProblem">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Problem"/>
+        <rdfs:comment>A geometry problem involving shape calculations</rdfs:comment>
+        <rdfs:label>Geometry Problem</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Topic">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Content"/>
+        <rdfs:comment>A subject area or topic of study</rdfs:comment>
+        <rdfs:label>Topic</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Interaction">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Content"/>
+        <rdfs:comment>A recorded interaction during a tutoring session</rdfs:comment>
+        <rdfs:label>Interaction</rdfs:label>
+    </owl:Class>
+
+
+    <!-- Knowledge Component Classes -->
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#KnowledgeComponent">
+        <rdfs:comment>Components related to knowledge representation and tracking</rdfs:comment>
+        <rdfs:label>Knowledge Component</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#KnowledgeLevel">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#KnowledgeComponent"/>
+        <rdfs:comment>Represents a student's proficiency level on a specific topic (0.0 to 1.0)</rdfs:comment>
+        <rdfs:label>Knowledge Level</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#LearningStyle">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#KnowledgeComponent"/>
+        <rdfs:comment>A student's preferred learning approach or style</rdfs:comment>
+        <rdfs:label>Learning Style</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#TeachingStrategy">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#KnowledgeComponent"/>
+        <rdfs:comment>A pedagogical approach used by tutors</rdfs:comment>
+        <rdfs:label>Teaching Strategy</rdfs:label>
+    </owl:Class>
+
+
+    <!-- Geometric Entity Classes -->
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#GeometricEntity">
+        <rdfs:comment>Entities related to geometry domain</rdfs:comment>
+        <rdfs:label>Geometric Entity</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Shape">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#GeometricEntity"/>
+        <rdfs:comment>A geometric shape with calculable properties</rdfs:comment>
+        <rdfs:label>Shape</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Square">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Shape"/>
+        <rdfs:comment>A quadrilateral with four equal sides and four right angles</rdfs:comment>
+        <rdfs:label>Square</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Rectangle">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Shape"/>
+        <rdfs:comment>A quadrilateral with four right angles</rdfs:comment>
+        <rdfs:label>Rectangle</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Triangle">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Shape"/>
+        <rdfs:comment>A polygon with three sides and three angles</rdfs:comment>
+        <rdfs:label>Triangle</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Circle">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Shape"/>
+        <rdfs:comment>A round shape with all points equidistant from center</rdfs:comment>
+        <rdfs:label>Circle</rdfs:label>
+    </owl:Class>
+
+
+    <!-- Formula Classes -->
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Formula">
+        <rdfs:comment>A mathematical formula or equation</rdfs:comment>
+        <rdfs:label>Formula</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#AreaFormula">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Formula"/>
+        <rdfs:comment>Formula for calculating area of a shape</rdfs:comment>
+        <rdfs:label>Area Formula</rdfs:label>
+    </owl:Class>
+
+
+    <!-- Assessment Classes -->
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Assessment">
+        <rdfs:comment>Assessment and evaluation components</rdfs:comment>
+        <rdfs:label>Assessment</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#PerformanceRecord">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Assessment"/>
+        <rdfs:comment>A record of student performance on a task</rdfs:comment>
+        <rdfs:label>Performance Record</rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#Answer">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Assessment"/>
+        <rdfs:comment>A student's answer to a problem</rdfs:comment>
+        <rdfs:label>Answer</rdfs:label>
+    </owl:Class>
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    <!-- Agent Relationships -->
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#hasStudent">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#TutoringSession"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Student"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#participatesIn"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:comment>Links a tutoring session to its student participant</rdfs:comment>
+        <rdfs:label>has student</rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#hasTutor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#TutoringSession"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Tutor"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#conductsSession"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:comment>Links a tutoring session to its tutor</rdfs:comment>
+        <rdfs:label>has tutor</rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#participatesIn">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Student"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#TutoringSession"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#hasStudent"/>
+        <rdfs:comment>Indicates a student participates in a tutoring session</rdfs:comment>
+        <rdfs:label>participates in</rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#conductsSession">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Tutor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#TutoringSession"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#hasTutor"/>
+        <rdfs:comment>Indicates a tutor conducts a tutoring session</rdfs:comment>
+        <rdfs:label>conducts session</rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#teachesSubject">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Tutor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Topic"/>
+        <rdfs:comment>Indicates a tutor teaches a specific subject or topic</rdfs:comment>
+        <rdfs:label>teaches subject</rdfs:label>
+    </owl:ObjectProperty>
+
+
+    <!-- Session Relationships -->
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#hasInteraction">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#TutoringSession"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Interaction"/>
+        <rdfs:comment>Links a session to its recorded interactions</rdfs:comment>
+        <rdfs:label>has interaction</rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#focusesOnTopic">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#TutoringSession"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Topic"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:comment>Indicates the main topic covered in a session</rdfs:comment>
+        <rdfs:label>focuses on topic</rdfs:label>
+    </owl:ObjectProperty>
+
+
+    <!-- Knowledge Relationships -->
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#hasKnowledge">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Student"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#KnowledgeLevel"/>
+        <rdfs:comment>Links a student to their knowledge levels</rdfs:comment>
+        <rdfs:label>has knowledge</rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#relatedToTopic">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#KnowledgeLevel"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Topic"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:comment>Links knowledge level to its associated topic</rdfs:comment>
+        <rdfs:label>related to topic</rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#hasLearningStyle">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Student"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#LearningStyle"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:comment>Indicates a student's learning style preference</rdfs:comment>
+        <rdfs:label>has learning style</rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#usesTeachingStrategy">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Tutor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#TeachingStrategy"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:comment>Indicates the teaching strategy employed by a tutor</rdfs:comment>
+        <rdfs:label>uses teaching strategy</rdfs:label>
+    </owl:ObjectProperty>
+
+
+    <!-- Problem Relationships -->
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#solvesProblem">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Student"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Problem"/>
+        <rdfs:comment>Indicates a student attempts to solve a problem</rdfs:comment>
+        <rdfs:label>solves problem</rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#generatesProblem">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Tutor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Problem"/>
+        <rdfs:comment>Indicates a tutor generates a problem</rdfs:comment>
+        <rdfs:label>generates problem</rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#hasShape">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#GeometryProblem"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Shape"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:comment>Links a geometry problem to its shape</rdfs:comment>
+        <rdfs:label>has shape</rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#usesFormula">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Problem"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Formula"/>
+        <rdfs:comment>Links a problem to the formula used to solve it</rdfs:comment>
+        <rdfs:label>uses formula</rdfs:label>
+    </owl:ObjectProperty>
+
+
+    <!-- Performance Relationships -->
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#hasPerformanceRecord">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Student"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#PerformanceRecord"/>
+        <rdfs:comment>Links a student to their performance records</rdfs:comment>
+        <rdfs:label>has performance record</rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#recordedInSession">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#PerformanceRecord"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#TutoringSession"/>
+        <rdfs:comment>Links a performance record to the session where it was recorded</rdfs:comment>
+        <rdfs:label>recorded in session</rdfs:label>
+    </owl:ObjectProperty>
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    <!-- Student Data Properties -->
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#studentID">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Student"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:comment>Unique identifier for a student</rdfs:comment>
+        <rdfs:label>student ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#studentName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Student"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Name of the student</rdfs:comment>
+        <rdfs:label>student name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#createdAt">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Student"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:comment>Timestamp when student account was created</rdfs:comment>
+        <rdfs:label>created at</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#lastActive">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Student"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:comment>Timestamp of student's last activity</rdfs:comment>
+        <rdfs:label>last active</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- Tutor Data Properties -->
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#tutorName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Tutor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Name of the tutor</rdfs:comment>
+        <rdfs:label>tutor name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#specializationArea">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Tutor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Area of specialization for the tutor</rdfs:comment>
+        <rdfs:label>specialization area</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- Session Data Properties -->
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#sessionID">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#TutoringSession"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:comment>Unique identifier for a tutoring session</rdfs:comment>
+        <rdfs:label>session ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#startTime">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#TutoringSession"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:comment>Start time of the tutoring session</rdfs:comment>
+        <rdfs:label>start time</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#endTime">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#TutoringSession"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:comment>End time of the tutoring session</rdfs:comment>
+        <rdfs:label>end time</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#duration">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#TutoringSession"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>Duration of session in seconds</rdfs:comment>
+        <rdfs:label>duration</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#topicName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Topic"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Name of the topic</rdfs:comment>
+        <rdfs:label>topic name</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- Knowledge Data Properties -->
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#knowledgeLevelValue">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#KnowledgeLevel"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>Numeric value of knowledge level between 0.0 and 1.0</rdfs:comment>
+        <rdfs:label>knowledge level value</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- Problem Data Properties -->
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#problemID">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Problem"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:comment>Unique identifier for a problem</rdfs:comment>
+        <rdfs:label>problem ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#questionText">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Problem"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Text of the problem question</rdfs:comment>
+        <rdfs:label>question text</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#correctAnswer">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Problem"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>Correct answer to the problem</rdfs:comment>
+        <rdfs:label>correct answer</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#difficulty">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Problem"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Difficulty level: beginner, intermediate, or advanced</rdfs:comment>
+        <rdfs:label>difficulty</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#hint">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Problem"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Hint to help solve the problem</rdfs:comment>
+        <rdfs:label>hint</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#explanation">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Problem"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Detailed explanation of the solution</rdfs:comment>
+        <rdfs:label>explanation</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#problemType">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Problem"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Type of problem: calculate, multiple_choice, or custom_input</rdfs:comment>
+        <rdfs:label>problem type</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- Shape Data Properties -->
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#shapeName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Shape"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Name of the geometric shape</rdfs:comment>
+        <rdfs:label>shape name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#side">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Square"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>Side length of a square</rdfs:comment>
+        <rdfs:label>side</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#length">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Rectangle"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>Length of a rectangle</rdfs:comment>
+        <rdfs:label>length</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#width">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Rectangle"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>Width of a rectangle</rdfs:comment>
+        <rdfs:label>width</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#base">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Triangle"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>Base length of a triangle</rdfs:comment>
+        <rdfs:label>base</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#height">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Triangle"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>Height of a triangle</rdfs:comment>
+        <rdfs:label>height</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#radius">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Circle"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>Radius of a circle</rdfs:comment>
+        <rdfs:label>radius</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- Formula Data Properties -->
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#formulaExpression">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Formula"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Mathematical expression of the formula</rdfs:comment>
+        <rdfs:label>formula expression</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#formulaDescription">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Formula"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Human-readable description of the formula</rdfs:comment>
+        <rdfs:label>formula description</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- Interaction Data Properties -->
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#interactionType">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Interaction"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Type of interaction (e.g., session_start, problem_attempt, session_end)</rdfs:comment>
+        <rdfs:label>interaction type</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#timestamp">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Interaction"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:comment>Timestamp when interaction occurred</rdfs:comment>
+        <rdfs:label>timestamp</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#initialLevel">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Interaction"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>Initial knowledge level at start of interaction</rdfs:comment>
+        <rdfs:label>initial level</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/its/intelligent-tutoring-system#finalLevel">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/its/intelligent-tutoring-system#Interaction"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment>Final knowledge level at end of interaction</rdfs:comment>
+        <rdfs:label>final level</rdfs:label>
+    </owl:DatatypeProperty>
+
+</rdf:RDF>
